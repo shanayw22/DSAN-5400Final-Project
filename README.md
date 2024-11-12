@@ -1,7 +1,7 @@
 # DSAN-5400Final-Project
 
 DSAN 5400 Final Project
-Team: Manav Arora, Jessica Joy, Shanay Wadhwani
+Team: Manav Arora, Jessica Joy, Shanay Wadhwani, Ofure Udabor
 
 What is the NLP problem your team will address?
 
