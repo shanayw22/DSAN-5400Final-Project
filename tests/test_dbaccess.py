@@ -5,6 +5,7 @@ from newspaper import Article
 from db_access_module.db_access import get_gkg_data, get_base_url, fetch_article_content
 
 
+# Making mock dataframe to test with functions in "db_access.py"
 mock_df = pd.DataFrame({
     "DocumentIdentifier": ["http://news.org/article0", "http://news.org/article1"],
     "V2Themes": ["PALE; ISR", "RUSS; UKR"],
@@ -15,6 +16,7 @@ mock_mbfc = pd.DataFrame({
     "source": ["news.org"]
 })
 
+# Mock query to test "get_gkg_data" function
 @patch("db_access_module.db_access.client.query")
 def test_getting_gkg_data(some_query):
     mock_of_query = MagicMock()
@@ -24,11 +26,13 @@ def test_getting_gkg_data(some_query):
     df = get_gkg_data(min_date="20220101", max_date="20240101")
     pd.testing.assert_frame_equal(df, mock_df)
 
+# Mock url to extract url for "get_base_url" function
 def test_getting_base_url():
     url = "http://www.news.org/article1"
     expected_base = "news.org"
     assert get_base_url(url) == expected_base
 
+# Mock url to make mock dataframe column in "fetch_article_content" function
 @patch("db_access_module.db_access.Article")
 def test_fetching_articles_content(url):
     mock_article = Article(url)
@@ -39,7 +43,6 @@ def test_fetching_articles_content(url):
 
     # mock df
     df = pd.DataFrame({"DocumentIdentifier": ["http://www.news.org/article1"]})
-
     content_df = fetch_article_content(df, "DocumentIdentifier", "content")
 
     assert "content" in content_df.columns
