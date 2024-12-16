@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "final_project"
+version = "0.1.0"
+description = "DSAN 54000 - analyzing media bias"
+authors = ["Jessica Joy, Manav Arora, Shanay Wadhwani, Ofure Udabor"]
+license = "MIT"
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
