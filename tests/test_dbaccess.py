@@ -1,5 +1,5 @@
-import pytest
 from unittest.mock import patch, MagicMock
+import pytest
 import pandas as pd
 from newspaper import Article
 from db_access_module.db_access import get_gkg_data, get_base_url, fetch_article_content
@@ -16,15 +16,23 @@ mock_mbfc = pd.DataFrame({
     "source": ["news.org"]
 })
 
-# Mock query to test "get_gkg_data" function
-@patch("db_access_module.db_access.client.query")
-def test_getting_gkg_data(some_query):
-    mock_of_query = MagicMock()
-    some_query.return_value = mock_of_query
-    mock_of_query.result.return_value.to_arrow.return_value.to_pandas.return_value = mock_df
+# Mock Google- client instance ; from Chat- GPT: how to test with seraphic file
+@pytest.fixture
+def mock_bigquery_client():
+    with patch("google.cloud.bigquery.Client.from_service_account_json") as mock_from_service_account_json:
+        mock_client_instance = MagicMock()
+        mock_from_service_account_json.return_value = mock_client_instance 
+        yield mock_client_instance
 
+
+# Mock query to test "get_gkg_data" function
+def test_getting_gkg_data(mock_bigquery_client):
+    mock_bigquery_client.query.return_value.result.return_value = [
+        {"key": "value"}
+    ]
     df = get_gkg_data(min_date="20220101", max_date="20240101")
-    pd.testing.assert_frame_equal(df, mock_df)
+    mock_bigquery_client.query.assert_called_once()
+    assert df == [{"key": "value"}]
 
 # Mock url to extract url for "get_base_url" function
 def test_getting_base_url():

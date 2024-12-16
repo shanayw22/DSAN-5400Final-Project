@@ -1,6 +1,6 @@
+from unittest.mock import patch
 import pytest
 import pandas as pd
-from unittest.mock import patch
 from mbfc_scrape.clean import get_norm_bias_label, get_norm_factual_label
 
 

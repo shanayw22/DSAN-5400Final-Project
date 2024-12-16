@@ -1,15 +1,15 @@
-import pytest
 from unittest.mock import patch, MagicMock
+import pytest
 from mbfc_scrape.scrape import check_response_ok, get_url_domain, get_matched_text
 
 
 # Making a mock response to test the "check_response_ok" function
 def test_check_response_ok():
     mock_r = MagicMock()
-    false_response = mock_r.status_code != 200 & "html" not in mock_r.headers['content-type']
+    false_response = mock_r.status_code != 200 and "html" not in mock_r.headers['content-type']
     assert check_response_ok(false_response) is False
 
-    true_response = mock_r.status_code == 200 & "html" in mock_r.headers['content-type']
+    true_response = mock_r.status_code == 200 and "html" in mock_r.headers['content-type']
     assert check_response_ok(true_response) is True
 
 # Making a mock url example to test the "get_url_domain" function
@@ -36,3 +36,7 @@ def test_scrape_file(mock_get):
         </table>
     """
     mock_get.return_value = mock_response
+
+    result = get_matched_text(mock_response)  
+    mock_get.assert_called_once_with("https://www.news.org")
+    assert result == "mock match case"
