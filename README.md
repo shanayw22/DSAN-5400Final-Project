@@ -12,7 +12,7 @@ Team: Manav Arora, Jessica Joy, Shanay Wadhwani, Ofure Udabor
 
 ## Data Source: 
 
-fetched data is stored here. Property of Georgetown University.
+See Fetched Data Below
 https://colab.research.google.com/drive/1erSNHc5qGZQdoq7Y1Bv3ArrHnMUj4eo5?usp=sharing
 
 @misc{gdelt_gkg,
