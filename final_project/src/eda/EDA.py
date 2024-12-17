@@ -14,12 +14,14 @@ class MediaBiasEDA:
         self.factual_mapping = {'low': 0, 'mixed': 1, 'high': 2}
 
     def load_data(self):
+        """Load data and set up mappings"""
         self.df = pd.read_csv(self.data_file)
         mbfc = pd.read_csv(self.mbfc_file)
         self.df = self.df.merge(mbfc, left_on='base_url', right_on='source')
         self.df['year'] = pd.to_numeric(self.df['DATE'].astype(str).str[:4])
 
     def process_data(self):
+        """Process and clean data"""
         self.df['bias_encoded'] = self.df['bias'].map(self.bias_hierarchy)
         self.df['factual_numeric'] = self.df['factual_reporting'].map(self.factual_mapping)
         self.df['country'] = self.df['country'].replace({
@@ -35,17 +37,20 @@ class MediaBiasEDA:
         self.df['country'] = self.df['country'].str.title()
 
     def plot_average_tone_distribution(self):
+        """Plot distribution of Average Tone"""
         ax = sns.histplot(data=self.df, x='Avg_Tone', bins=30, kde=True)
         ax.set_xlabel('Average Tone')
         ax.set_title('Average Tone Distribution')
         plt.show()
 
     def plot_bias_count(self):
+        """Plot count of bias"""
         sns.countplot(data=self.df, x='bias')
         plt.title('Bias Distribution')
         plt.show()
 
     def plot_factual_by_country(self, top=True):
+        """Plot average actuality score by country, top or bottom 10"""
         avg_factual = self.df.groupby('country')['factual_numeric'].mean().reset_index()
         avg_factual = avg_factual.sort_values('factual_numeric', ascending=not top).head(15)
 
@@ -58,6 +63,7 @@ class MediaBiasEDA:
         plt.show()
 
     def plot_bias_by_country(self, right=True):
+        """Plor average bias by country, top 10 right or left countries"""
         avg_bias = self.df.groupby('country')['bias_encoded'].mean().reset_index()
         avg_bias = avg_bias.sort_values('bias_encoded', ascending=not right).head(10)
 
@@ -69,6 +75,7 @@ class MediaBiasEDA:
         plt.show()
 
     def plot_tone_by_country(self, top=True):
+        """Plot average tone by country, top or bottom 10"""
         avg_tone = self.df.groupby('country')['Avg_Tone'].mean().reset_index()
         avg_tone = avg_tone.sort_values('Avg_Tone', ascending=not top).head(10)
 
