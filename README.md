@@ -23,7 +23,7 @@ https://colab.research.google.com/drive/1erSNHc5qGZQdoq7Y1Bv3ArrHnMUj4eo5?usp=sh
   note = {Accessed: June 2024}
 }
 
-data can be fetched using big query apis through the data_fetch.ipynb file
+Up to date data can be fetched using big query apis through the data_fetch.ipynb file.
 
 
 ## NLP Objective
