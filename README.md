@@ -10,14 +10,6 @@ Team: Manav Arora, Jessica Joy, Shanay Wadhwani, Ofure Udabor
 
 Build an Information Retrieval system to address how biases in global news coverage of Palestinian-Israeli and Russian-Ukrainian conflicts manifest across different media outlets, specifically through variations in tone, factuality, and regional focus. By uncovering these patterns, this project seeks to improve our users’ understanding of their media consumption and news source biases.
 
-### Current Relevant Research
-
-* Leetaru, Kalev et al (2013) GDELT: Global Data on Events, Location and Tone, 1979-2012.
-* Watanabe, Kohei (2017) Measuring bias in international news: a large-scale analysis of news agency coverage of the Ukraine crisis. PhD thesis, London School of Economics and Political Science.	
-* Hamborg, Felix (2023) Revealing Media Bias in News Articles: NLP Techniques for Automated Frame Analysis
-* Kwak, H., An, J. (2014) A First Look at Global News Coverage of Disasters by Using the GDELT Dataset. In: Aiello, L.M., McFarland, D. (eds) Social Informatics. SocInfo 2014.
-* Francisco-Javier Rodrigo-Ginés et al. (2024) A systematic review on media bias detection: What is media bias, how it is expressed, and how to detect it, Expert Systems with Applications, Volume 237, Part C. 
-
 ### Data Sources
 
 **GDELT (Global Database of Events, Language, and Tone):** a global database that collects and analyses news articles from around the world to track events, locations, people, and themes, aiming to study human society.
@@ -43,5 +35,13 @@ The data used and the indices created for this project exceeded the size limits 
 **Baseline:** TF-IDF, BM25
 
 **Neural Models:** Voyager, ColBERT, ColBERT Rerank
+
+### Current Relevant Research
+
+* Leetaru, Kalev et al (2013) GDELT: Global Data on Events, Location and Tone, 1979-2012.
+* Watanabe, Kohei (2017) Measuring bias in international news: a large-scale analysis of news agency coverage of the Ukraine crisis. PhD thesis, London School of Economics and Political Science.	
+* Hamborg, Felix (2023) Revealing Media Bias in News Articles: NLP Techniques for Automated Frame Analysis
+* Kwak, H., An, J. (2014) A First Look at Global News Coverage of Disasters by Using the GDELT Dataset. In: Aiello, L.M., McFarland, D. (eds) Social Informatics. SocInfo 2014.
+* Francisco-Javier Rodrigo-Ginés et al. (2024) A systematic review on media bias detection: What is media bias, how it is expressed, and how to detect it, Expert Systems with Applications, Volume 237, Part C. 
 
 
