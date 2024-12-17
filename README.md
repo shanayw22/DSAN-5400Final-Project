@@ -1,7 +1,9 @@
 # Analyzing Media Bias in Global News Coverage of the Palestinian-Israeli and Russian-Ukrainian Conflicts: Tone, Factuality, and Regional Focus
 
 Georgetown University
+
 DSAN 5400 Final Project
+
 Team: Manav Arora, Jessica Joy, Shanay Wadhwani, Ofure Udabor
 
 ## NLP Objective
