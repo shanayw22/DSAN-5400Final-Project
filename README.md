@@ -6,26 +6,6 @@ DSAN 5400 Final Project
 
 Team: Manav Arora, Jessica Joy, Shanay Wadhwani, Ofure Udabor
 
-## Analyzing Media Bias in Global News Coverage of the Palestinian-Israeli and Russian-Ukrainian Conflicts: Tone, Factuality, and Regional Focus
-
-
-
-## Data Source
-
-See Fetched Data Below
-https://drive.google.com/file/d/1LD4XFWOPv3ePgA6sxkqHLxq-mboYPTSm/view?usp=sharing
-
-@misc{gdelt_gkg,
-  author = {{GDELT Project}},
-  year = {2024},
-  title = {Global Knowledge Graph (GKG) Dataset},
-  url = {https://www.gdeltproject.org},
-  note = {Accessed: June 2024}
-}
-
-Up to date data can be fetched using big query apis through the data_fetch.ipynb file.
-
-
 ## NLP Objective
 
 Build an Information Retrieval system to address how biases in global news coverage of Palestinian-Israeli and Russian-Ukrainian conflicts manifest across different media outlets, specifically through variations in tone, factuality, and regional focus. By uncovering these patterns, this project seeks to improve our users’ understanding of their media consumption and news source biases.
@@ -40,9 +20,19 @@ Build an Information Retrieval system to address how biases in global news cover
 
 #### Data Files and Indices
 The data used and the indices created for this project exceeded the size limits on GitHub and are included as google drive links here:
-- Link to consolidated Dataset:
+- Link to consolidated Dataset: [csv file](https://drive.google.com/file/d/1LD4XFWOPv3ePgA6sxkqHLxq-mboYPTSm/view?usp=sharing)
 - Link to BM25 index: [pickle file](https://drive.google.com/file/d/1-yNSzuZtZwlhwia3X5Seu1scwPmjbve3/view?usp=sharing)
 - Link to Colbert and Voyager Indices: [Folder titled .ragatouille](https://drive.google.com/drive/folders/11g6RW9nKCl7SJ_niU_pYIIq7oLcQwxRi?usp=sharing)
+
+@misc{gdelt_gkg,
+  author = {{GDELT Project}},
+  year = {2024},
+  title = {Global Knowledge Graph (GKG) Dataset},
+  url = {https://www.gdeltproject.org},
+  note = {Accessed: June 2024}
+}
+
+Up to date data can be fetched using big query apis through the data_fetch.ipynb file.
 
 ### Methods
 
