@@ -13,7 +13,7 @@ Team: Manav Arora, Jessica Joy, Shanay Wadhwani, Ofure Udabor
 ## Data Source: 
 
 See Fetched Data Below
-https://colab.research.google.com/drive/1erSNHc5qGZQdoq7Y1Bv3ArrHnMUj4eo5?usp=sharing
+https://drive.google.com/file/d/1LD4XFWOPv3ePgA6sxkqHLxq-mboYPTSm/view?usp=sharing
 
 @misc{gdelt_gkg,
   author = {{GDELT Project}},
