@@ -3,6 +3,14 @@
 DSAN 5400 Final Project
 Team: Manav Arora, Jessica Joy, Shanay Wadhwani, Ofure Udabor
 
+## Data Files and Indices
+The data used and the indices created for this project exceeded the size limits on github and are inclluded as google drive links here:
+- Link to consolidated Dataset:
+- Link to BM25 index: 
+- Link to Colbert and Voyager Indices: [here](https://drive.google.com/drive/folders/1A8I_K0IkDMBZ3xhAnkNODS6nuGOIRRBA?usp=sharing)
+
+
+
 What is the NLP problem your team will address?
 
 Build an Information Retrieval system to address how biases in global news coverage of Palestinian-Israeli and Russian-Ukrainian conflicts manifest across different media outlets, specifically through variations in tone, polarity, and regional focus. By uncovering these patterns, this project seeks to analyze whether and how media coverage may contribute to public perception, polarization, and the formation of biased or incomplete understandings of these global conflicts.
