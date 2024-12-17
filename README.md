@@ -6,6 +6,26 @@ DSAN 5400 Final Project
 
 Team: Manav Arora, Jessica Joy, Shanay Wadhwani, Ofure Udabor
 
+## Analyzing Media Bias in Global News Coverage of the Palestinian-Israeli and Russian-Ukrainian Conflicts: Tone, Factuality, and Regional Focus
+
+
+
+## Data Source: 
+
+fetched data is stored here. Property of Georgetown University.
+https://colab.research.google.com/drive/1erSNHc5qGZQdoq7Y1Bv3ArrHnMUj4eo5?usp=sharing
+
+@misc{gdelt_gkg,
+  author = {{GDELT Project}},
+  year = {2024},
+  title = {Global Knowledge Graph (GKG) Dataset},
+  url = {https://www.gdeltproject.org},
+  note = {Accessed: June 2024}
+}
+
+data can be fetched using big query apis through the data_fetch.ipynb file
+
+
 ## NLP Objective
 
 Build an Information Retrieval system to address how biases in global news coverage of Palestinian-Israeli and Russian-Ukrainian conflicts manifest across different media outlets, specifically through variations in tone, factuality, and regional focus. By uncovering these patterns, this project seeks to improve our users’ understanding of their media consumption and news source biases.
