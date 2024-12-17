@@ -7,7 +7,7 @@ Team: Manav Arora, Jessica Joy, Shanay Wadhwani, Ofure Udabor
 The data used and the indices created for this project exceeded the size limits on github and are inclluded as google drive links here:
 - Link to consolidated Dataset:
 - Link to BM25 index: [pickle file](https://drive.google.com/file/d/1-yNSzuZtZwlhwia3X5Seu1scwPmjbve3/view?usp=sharing)
-- Link to Colbert and Voyager Indices: [Folder the titled ".ragatouille"]([https://drive.google.com/drive/folders/1A8I_K0IkDMBZ3xhAnkNODS6nuGOIRRBA?usp=sharing])
+- Link to Colbert and Voyager Indices: [Folder titled .ragatouille](https://drive.google.com/drive/folders/11g6RW9nKCl7SJ_niU_pYIIq7oLcQwxRi?usp=sharing)
 
 
 
