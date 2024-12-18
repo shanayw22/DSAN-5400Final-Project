@@ -21,7 +21,7 @@ Build an Information Retrieval system to address how biases in global news cover
 #### Data Files and Indices
 The data used and the indices created for this project exceeded the size limits on GitHub and are included as Google Drive links here:
 - Link to consolidated Dataset: [csv file](https://drive.google.com/file/d/1LD4XFWOPv3ePgA6sxkqHLxq-mboYPTSm/view?usp=sharing)
-- Link to filtered English only Dataset" [csv file](https://drive.google.com/file/d/19K53iYARaTGcRettKLzTCRkt8eida-HC/view?usp=sharing)
+- Link to filtered English-only Dataset: [csv file](https://drive.google.com/file/d/19K53iYARaTGcRettKLzTCRkt8eida-HC/view?usp=sharing)
 - Link to BM25 index: [pickle file](https://drive.google.com/file/d/1-yNSzuZtZwlhwia3X5Seu1scwPmjbve3/view?usp=sharing)
 - Link to Colbert and Voyager Indices: [Folder titled .ragatouille](https://drive.google.com/drive/folders/11g6RW9nKCl7SJ_niU_pYIIq7oLcQwxRi?usp=sharing)
 
