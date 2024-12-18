@@ -58,12 +58,39 @@ Up to date data can be fetched using big query apis through the data_fetch.ipynb
 
 ![Architecture Diagram](./python_proj.drawio.png)
 
-### Package and Usage
+### Package Information
 
-The package is divided into the following modules:
+#### Installation
+
+```bash
+pip install final_project
+```
+
+#### Usage
 
 mbfc: Handles web scraping and data cleaning for media bias data.
 eda: Provides tools for performing exploratory data analysis.
 colbert: Builds ColBERT models.
 app: Implements retrieval systems and dashboard
+
+#### Contributing
+
+Clone and set up the repository with
+
+```bash
+git clone TODO && cd final_project
+pip install -e ".[dev]"
+```
+
+Install pre-commit hooks with
+
+```bash
+pre-commit install
+```
+
+Run tests using
+
+```
+pytest -v tests
+```
 
