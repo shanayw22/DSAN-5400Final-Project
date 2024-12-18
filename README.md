@@ -54,4 +54,7 @@ Up to date data can be fetched using big query apis through the data_fetch.ipynb
 * Kwak, H., An, J. (2014) A First Look at Global News Coverage of Disasters by Using the GDELT Dataset. In: Aiello, L.M., McFarland, D. (eds) Social Informatics. SocInfo 2014.
 * Francisco-Javier Rodrigo-Ginés et al. (2024) A systematic review on media bias detection: What is media bias, how it is expressed, and how to detect it, Expert Systems with Applications, Volume 237, Part C. 
 
+### Project Structure
+
+![Architecture Diagram](./python_proj.drawio.png)
 
