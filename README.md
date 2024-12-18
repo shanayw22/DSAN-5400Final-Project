@@ -19,8 +19,9 @@ Build an Information Retrieval system to address how biases in global news cover
 **News Articles:** Scrape relevant articles using APIs or scraping libraries like Beautiful Soup to build our corpus.
 
 #### Data Files and Indices
-The data used and the indices created for this project exceeded the size limits on GitHub and are included as google drive links here:
+The data used and the indices created for this project exceeded the size limits on GitHub and are included as Google Drive links here:
 - Link to consolidated Dataset: [csv file](https://drive.google.com/file/d/1LD4XFWOPv3ePgA6sxkqHLxq-mboYPTSm/view?usp=sharing)
+- Link to filtered English only Dataset" [csv file](https://drive.google.com/file/d/19K53iYARaTGcRettKLzTCRkt8eida-HC/view?usp=sharing)
 - Link to BM25 index: [pickle file](https://drive.google.com/file/d/1-yNSzuZtZwlhwia3X5Seu1scwPmjbve3/view?usp=sharing)
 - Link to Colbert and Voyager Indices: [Folder titled .ragatouille](https://drive.google.com/drive/folders/11g6RW9nKCl7SJ_niU_pYIIq7oLcQwxRi?usp=sharing)
 
@@ -36,7 +37,7 @@ Up to date data can be fetched using big query apis through the data_fetch.ipynb
 
 ### Methods
 
-**Information Retrieval System:** Perform indexing and query processing and then use ranking algorithms to create an efficient retrieval system, displaying metrics such as bias, tone, factuality reporting.
+**Information Retrieval System:** Perform indexing and query processing and then use ranking algorithms to create an efficient retrieval system, displaying metrics such as bias, tone, and factuality reporting.
 
 **Visualization Dashboard:** Create an interactive map that displays regions alongside filtering for bias scores, tone, and factuality reporting allowing for comparative analysis across regions and outlets.
 
