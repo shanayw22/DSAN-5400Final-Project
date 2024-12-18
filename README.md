@@ -69,8 +69,11 @@ pip install final_project
 #### Usage
 
 mbfc: Handles web scraping and data cleaning for media bias data.
+
 eda: Provides tools for performing exploratory data analysis.
+
 colbert: Builds ColBERT models.
+
 app: Implements retrieval systems and dashboard
 
 #### Contributing
