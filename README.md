@@ -58,3 +58,12 @@ Up to date data can be fetched using big query apis through the data_fetch.ipynb
 
 ![Architecture Diagram](./python_proj.drawio.png)
 
+### Package and Usage
+
+The package is divided into the following modules:
+
+mbfc: Handles web scraping and data cleaning for media bias data.
+eda: Provides tools for performing exploratory data analysis.
+colbert: Builds ColBERT models.
+app: Implements retrieval systems and dashboard
+
