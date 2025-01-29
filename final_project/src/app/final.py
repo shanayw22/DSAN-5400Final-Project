@@ -24,6 +24,17 @@ def clean_up_conflicts(path):
             shutil.rmtree(conflict_path)  # Delete the conflict directory
             print(f"Removed conflicting directory: {conflict_path}")
 
+# Function to extract the zip file while skipping unwanted files like __MACOSX
+def extract_zip_without_mac_osx(zip_file_path, extract_to_path):
+    with zipfile.ZipFile(zip_file_path, 'r') as zip_ref:
+        # Extract all files except those under __MACOSX
+        for file in zip_ref.namelist():
+            if '__MACOSX' not in file:  # Skip any file inside __MACOSX
+                zip_ref.extract(file, extract_to_path)
+                print(f"Extracted {file}")
+            else:
+                print(f"Skipping unwanted file: {file}")
+
 # Download the ZIP file using gdown if it doesn't exist
 if not os.path.exists(zip_file_path):
     print("Downloading ZIP file from Google Drive...")
@@ -38,8 +49,8 @@ if not os.path.exists(zip_file_path):
                 # Clean up any conflicts before extracting
                 clean_up_conflicts(extract_to_path)
                 
-                with zipfile.ZipFile(zip_file_path, 'r') as zip_ref:
-                    zip_ref.extractall(extract_to_path)
+                # Extract the zip file without including the __MACOSX directory
+                extract_zip_without_mac_osx(zip_file_path, extract_to_path)
                 print(f"Extracted to {extract_to_path}")
             except zipfile.BadZipFile:
                 print("Downloaded file is not a valid zip file.")
