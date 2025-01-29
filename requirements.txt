@@ -4,3 +4,5 @@ pandas
 plotly
 requests
 gdown
+shutil
+torch==2.1.0+cpu
