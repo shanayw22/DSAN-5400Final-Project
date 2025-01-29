@@ -6,17 +6,25 @@ import pandas as pd
 import time
 import datetime
 import plotly.express as px
-import zipfile
 import os
-import requests
-import zipfile
 import gdown
+import zipfile
+import shutil
 
 GDRIVE_URL = 'https://drive.google.com/uc?id=1FGVx4jFMLf6ijxwkgqFyLeCU3yPWGvAe'
 zip_file_path = 'final_project/src/ragatouille.zip'
 extract_to_path = 'final_project/src/'
 
-# Download the ZIP file using gdown
+# Function to clean up any conflicting files/directories before extraction
+def clean_up_conflicts(path):
+    conflict_dirs = ['__MACOSX']  # Directories that commonly conflict in zip files
+    for conflict_dir in conflict_dirs:
+        conflict_path = os.path.join(path, conflict_dir)
+        if os.path.exists(conflict_path):
+            shutil.rmtree(conflict_path)  # Delete the conflict directory
+            print(f"Removed conflicting directory: {conflict_path}")
+
+# Download the ZIP file using gdown if it doesn't exist
 if not os.path.exists(zip_file_path):
     print("Downloading ZIP file from Google Drive...")
     gdown.download(GDRIVE_URL, zip_file_path, quiet=False)
@@ -27,6 +35,9 @@ if not os.path.exists(zip_file_path):
 
         if zipfile.is_zipfile(zip_file_path):
             try:
+                # Clean up any conflicts before extracting
+                clean_up_conflicts(extract_to_path)
+                
                 with zipfile.ZipFile(zip_file_path, 'r') as zip_ref:
                     zip_ref.extractall(extract_to_path)
                 print(f"Extracted to {extract_to_path}")
@@ -36,6 +47,7 @@ if not os.path.exists(zip_file_path):
             print("The downloaded file is not a valid zip file.")
 else:
     print("File already exists, skipping download.")
+
 path_to_index = "final_project/src/ragatouille/colbert/indexes/b00_split2/"
 
 st.set_page_config(
