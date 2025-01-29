@@ -90,7 +90,10 @@ df = load_data()
 
 # Load colbert index 
 path_to_index = "final_project/src/ragatouille/colbert/indexes/b00_split2/"
-RAG1 = RAGPretrainedModel.from_index(path_to_index)
+try:
+    RAG1 = RAGPretrainedModel.from_index(path_to_index)
+except ValueError as e:
+    print(f"Error loading model: {e}")
 
 
 st.title("Informed Retrieval")
