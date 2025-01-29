@@ -9,13 +9,13 @@ import plotly.express as px
 import zipfile
 import os
 
-zip_file_path = "../ragatouille-20250118T231710Z-001.zip"
-extract_to_path = "../.ragatouille"
+zip_file_path = "final_project/src/ragatouille-20250118T231710Z-001.zip"
+extract_to_path = "final_project/src/"
 
 with zipfile.ZipFile(zip_file_path, 'r') as zip_ref:
     zip_ref.extractall(extract_to_path)
 
-path_to_index = "../.ragatouille/colbert/indexes/b00_split2/"
+path_to_index = "final_project/src/.ragatouille/colbert/indexes/b00_split2/"
 
 st.set_page_config(
     page_title="Media Metrics",
@@ -26,7 +26,7 @@ st.set_page_config(
 
 @st.cache_data
 def load_data():
-    df = pd.read_csv("../english_mbfc_reduced.csv")
+    df = pd.read_csv("final_project/src/english_mbfc_reduced.csv")
     #dfx = pd.read_csv("../mbfc.csv")
     #df = df.merge(dfx, left_on='base_url', right_on='source')
     #df['year'] = df['DATE'].astype(str).str[:4]
@@ -45,7 +45,7 @@ df = load_data()
 
 
 # Load colbert index 
-path_to_index = "../.ragatouille/colbert/indexes/b00_split2/"
+path_to_index = "final_project/src/.ragatouille/colbert/indexes/b00_split2/"
 RAG1 = RAGPretrainedModel.from_index(path_to_index)
 
 
