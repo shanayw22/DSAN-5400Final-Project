@@ -6,7 +6,16 @@ import pandas as pd
 import time
 import datetime
 import plotly.express as px
+import zipfile
+import os
 
+zip_file_path = "../ragatouille-20250118T231710Z-001.zip"
+extract_to_path = "../.ragatouille"
+
+with zipfile.ZipFile(zip_file_path, 'r') as zip_ref:
+    zip_ref.extractall(extract_to_path)
+
+path_to_index = "../.ragatouille/colbert/indexes/b00_split2/"
 
 st.set_page_config(
     page_title="Media Metrics",
