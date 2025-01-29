@@ -5,3 +5,4 @@ plotly
 requests
 gdown
 torch
+setuptools
