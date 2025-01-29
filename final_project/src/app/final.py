@@ -8,14 +8,35 @@ import datetime
 import plotly.express as px
 import zipfile
 import os
+import requests
+import zipfile
+import gdown
 
-zip_file_path = "final_project/src/ragatouille-20250118T231710Z-001.zip"
-extract_to_path = "final_project/src/"
+GDRIVE_URL = 'https://drive.google.com/uc?id=1FGVx4jFMLf6ijxwkgqFyLeCU3yPWGvAe'
+zip_file_path = 'final_project/src/ragatouille.zip'
+extract_to_path = 'final_project/src/'
 
-with zipfile.ZipFile(zip_file_path, 'r') as zip_ref:
-    zip_ref.extractall(extract_to_path)
+# Download the ZIP file using gdown
+if not os.path.exists(zip_file_path):
+    print("Downloading ZIP file from Google Drive...")
+    gdown.download(GDRIVE_URL, zip_file_path, quiet=False)
 
-path_to_index = "final_project/src/.ragatouille/colbert/indexes/b00_split2/"
+    # Check if the downloaded file is a valid ZIP file
+    if os.path.exists(zip_file_path):
+        print(f"Downloaded file size: {os.path.getsize(zip_file_path)} bytes")
+
+        if zipfile.is_zipfile(zip_file_path):
+            try:
+                with zipfile.ZipFile(zip_file_path, 'r') as zip_ref:
+                    zip_ref.extractall(extract_to_path)
+                print(f"Extracted to {extract_to_path}")
+            except zipfile.BadZipFile:
+                print("Downloaded file is not a valid zip file.")
+        else:
+            print("The downloaded file is not a valid zip file.")
+else:
+    print("File already exists, skipping download.")
+path_to_index = "final_project/src/ragatouille/colbert/indexes/b00_split2/"
 
 st.set_page_config(
     page_title="Media Metrics",
@@ -45,7 +66,7 @@ df = load_data()
 
 
 # Load colbert index 
-path_to_index = "final_project/src/.ragatouille/colbert/indexes/b00_split2/"
+path_to_index = "final_project/src/ragatouille/colbert/indexes/b00_split2/"
 RAG1 = RAGPretrainedModel.from_index(path_to_index)
 
 
