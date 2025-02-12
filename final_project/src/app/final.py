@@ -1,5 +1,6 @@
 import warnings
 warnings.filterwarnings('ignore')
+
 import streamlit as st
 from ragatouille import RAGPretrainedModel
 import pandas as pd
@@ -10,101 +11,77 @@ import os
 import gdown
 import zipfile
 import shutil
+import watchdog
 
+# Google Drive file settings
 GDRIVE_URL = 'https://drive.google.com/uc?id=1FGVx4jFMLf6ijxwkgqFyLeCU3yPWGvAe'
-zip_file_path = 'final_project/src/ragatouille.zip'
-extract_to_path = 'final_project/src/'
-
-# Function to clean up any conflicting files/directories before extraction
-def clean_up_conflicts(path):
-    conflict_dirs = ['__MACOSX']  # Directories that commonly conflict in zip files
-    for conflict_dir in conflict_dirs:
-        conflict_path = os.path.join(path, conflict_dir)
-        if os.path.exists(conflict_path):
-            shutil.rmtree(conflict_path)  # Delete the conflict directory
-            print(f"Removed conflicting directory: {conflict_path}")
-
-# Function to extract the zip file while skipping unwanted files like __MACOSX
-def extract_zip_without_mac_osx(zip_file_path, extract_to_path):
-    with zipfile.ZipFile(zip_file_path, 'r') as zip_ref:
-        # Extract all files except those under __MACOSX
-        for file in zip_ref.namelist():
-            if '__MACOSX' not in file:  # Skip any file inside __MACOSX
-                zip_ref.extract(file, extract_to_path)
-                print(f"Extracted {file}")
-            else:
-                print(f"Skipping unwanted file: {file}")
-
-# Download the ZIP file using gdown if it doesn't exist
-if not os.path.exists(zip_file_path):
-    print("Downloading ZIP file from Google Drive...")
-    gdown.download(GDRIVE_URL, zip_file_path, quiet=False)
-
-    # Check if the downloaded file is a valid ZIP file
-    if os.path.exists(zip_file_path):
-        print(f"Downloaded file size: {os.path.getsize(zip_file_path)} bytes")
-
-        if zipfile.is_zipfile(zip_file_path):
-            try:
-                # Clean up any conflicts before extracting
-                clean_up_conflicts(extract_to_path)
-                
-                # Extract the zip file without including the __MACOSX directory
-                extract_zip_without_mac_osx(zip_file_path, extract_to_path)
-                print(f"Extracted to {extract_to_path}")
-            except zipfile.BadZipFile:
-                print("Downloaded file is not a valid zip file.")
-        else:
-            print("The downloaded file is not a valid zip file.")
-else:
-    print("File already exists, skipping download.")
-
-path_to_index = "final_project/src/ragatouille/colbert/indexes/b00_split2/"
+ZIP_FILE_PATH = 'final_project/src/ragatouille.zip'
+EXTRACT_TO_PATH = 'final_project/src/'
+INDEX_PATH = "final_project/src/ragatouille/colbert/indexes/b00_split2/"
 
 st.set_page_config(
     page_title="Media Metrics",
     page_icon="🌍",
-    layout="wide", 
+    layout="wide",
     initial_sidebar_state="expanded",
 )
 
+@st.cache_resource
+def get_ragatouille_index():
+    """Ensure the Google Drive ZIP file is downloaded and extracted, then return the RAG model."""
+    if not os.path.exists(ZIP_FILE_PATH):
+        st.info("Downloading RAG model files from Google Drive...")
+        gdown.download(GDRIVE_URL, ZIP_FILE_PATH, quiet=False)
+
+    if not os.path.exists(EXTRACT_TO_PATH):
+        os.makedirs(EXTRACT_TO_PATH, exist_ok=True)
+
+    if zipfile.is_zipfile(ZIP_FILE_PATH):
+        with zipfile.ZipFile(ZIP_FILE_PATH, 'r') as zip_ref:
+            for file in zip_ref.namelist():
+                if '__MACOSX' not in file:
+                    zip_ref.extract(file, EXTRACT_TO_PATH)
+
+    try:
+        return RAGPretrainedModel.from_index(INDEX_PATH)
+    except ValueError as e:
+        st.error(f"Error loading model: {e}")
+        return None
+
 @st.cache_data
 def load_data():
+    """Load and preprocess dataset."""
     df = pd.read_csv("final_project/src/english_mbfc_reduced.csv")
-    #dfx = pd.read_csv("../mbfc.csv")
-    #df = df.merge(dfx, left_on='base_url', right_on='source')
-    #df['year'] = df['DATE'].astype(str).str[:4]
-    #df['year'] = pd.to_numeric(df['year'])
-    bias_hierarchy = {'left': -1, 'left-center': -0.5, 'neutral': 0, 'right-center': 0.5, 'right': 1}
-    df['bias_encoded'] = df['bias'].map(bias_hierarchy)
-    df['country'] = df['country'].replace({'usa (44/180 press freedom)':'united states', 'usa (45/180 press freedom)':'united states', 'usa': 'united states','guam (us territory)':'united states',
-                                        'united kingdom (scotland)':'united kingdom', 'united kingsom':'united kingdom', 'northern ireland (uk)': 'united kingdom',
-                                         'italy (vatican city)':'italy'})
-    df['country'] = df['country'].str.title()
+
+    bias_mapping = {'left': -1, 'left-center': -0.5, 'neutral': 0, 'right-center': 0.5, 'right': 1}
     factual_mapping = {'low': 0, 'mixed': 1, 'high': 2}
+    
+    df['bias_encoded'] = df['bias'].map(bias_mapping)
     df['factual_numeric'] = df['factual_reporting'].map(factual_mapping)
+
+    country_map = {
+        'usa (44/180 press freedom)': 'united states',
+        'usa (45/180 press freedom)': 'united states',
+        'usa': 'united states',
+        'guam (us territory)': 'united states',
+        'united kingdom (scotland)': 'united kingdom',
+        'united kingsom': 'united kingdom',
+        'northern ireland (uk)': 'united kingdom',
+        'italy (vatican city)': 'italy'
+    }
+
+    df['country'] = df['country'].replace(country_map).str.title()
     return df
 
 df = load_data()
-
-
-# Load colbert index 
-path_to_index = "final_project/src/ragatouille/colbert/indexes/b00_split2/"
-try:
-    RAG1 = RAGPretrainedModel.from_index(path_to_index)
-except ValueError as e:
-    print(f"Error loading model: {e}")
-
+rag_model = get_ragatouille_index()
 
 st.title("Informed Retrieval")
 
+# Store model in session state
 if 'index' not in st.session_state:
-
-    st.session_state.index = RAG1
-
+    st.session_state.index = rag_model
 index = st.session_state.index
-
-
 
 with st.sidebar:
     st.write("**DSAN 5400 Project**")
@@ -114,66 +91,57 @@ with st.sidebar:
     st.write("Shanay Wadhwani")
     st.write("Ofure Udabor")
 
+tab1, tab2 = st.tabs(["Dashboard", "Colbert"])
 
-
-tab1, tab2= st.tabs(["Dashboard", "Colbert" ])
-
+# **Colbert Search Tab**
 with tab2:
-
-    query_text = st.text_input("Enter your query:",  key="1")
-
+    query_text = st.text_input("Enter your query:", key="query_input")
 
     if query_text:
-
         start_time = time.time()
-        top_results = index.search(query= query_text, k=10)
-        end_time = time.time()
-        st.write("Most relevant results generated in:", round(end_time - start_time, 4), "seconds")
-        
-        #st.write(f"Most relevant documents:\n\n")
-        for i in top_results:
-            #st.write(f"**Content**: {i['content']}")
-            col1, col2, col3 = st.columns(3)
-            col1.write(f"**Source**: {i['document_metadata']['source']}")
-            col1.write(f"**Country**: {i['document_metadata']['country']}")
+        top_results = index.search(query=query_text, k=10)
+        elapsed_time = round(time.time() - start_time, 4)
 
-            col2.write(f"**Publisher Bias**: {i['document_metadata']['bias']}")
-            d = datetime.datetime.strptime(str(i['document_metadata']['DATE'])[:8], '%Y%m%d')
-            
-            col2.write(f"**Date**:{d}")
-            
-            if i['document_metadata']['factual_reporting'] == 'low':
-                col3.write(f"**Publisher Factuality**: :red[{i['document_metadata']['factual_reporting']}]")
-            elif i['document_metadata']['factual_reporting'] == 'mixed': 
-                col3.write(f"**Publisher Factuality**: :orange[{i['document_metadata']['factual_reporting']}]")
-            else:
-                col3.write(f"**Publisher Factuality**: :green[{i['document_metadata']['factual_reporting']}]")
-            
-            if i['document_metadata']['Avg_Tone'] < 0:
-                col3.write(f"**Document Tone**: :red[{i['document_metadata']['Avg_Tone']}]")
-            else:
-                col3.write(f"**Document Tone**: :green[{i['document_metadata']['Avg_Tone']}]")
-                
-            #st.write(f"**Country**: {i['document_metadata']['country']}")
-            #st.write(f"**Publisher Bias**: {i['document_metadata']['bias']}")
-            #st.write(f"**Publisher Factuality**: {i['document_metadata']['factual_reporting']}")
-            #st.write(f"**Document Tone**: {i['document_metadata']['Avg_Tone']}")
-            st.write(f"**Document Link**: {i['document_metadata']['DocumentIdentifier']}")
-            st.write(f"**Content**: {i['content'][:280]} ... ")
-            
-            with st.expander("expand to read more:"):
-                st.write(i['content'])
-            
+        st.write(f"Most relevant results generated in: {elapsed_time} seconds")
+
+        for result in top_results:
+            metadata = result['document_metadata']
+            col1, col2, col3 = st.columns(3)
+
+            col1.write(f"**Source**: {metadata['source']}")
+            col1.write(f"**Country**: {metadata['country']}")
+            col2.write(f"**Publisher Bias**: {metadata['bias']}")
+
+            # Convert date to readable format
+            date_str = str(metadata['DATE'])[:8]
+            formatted_date = datetime.datetime.strptime(date_str, '%Y%m%d').strftime('%Y-%m-%d')
+            col2.write(f"**Date**: {formatted_date}")
+
+            # Publisher factuality with color coding
+            factuality_color = {
+                'low': 'red',
+                'mixed': 'orange',
+                'high': 'green'
+            }.get(metadata['factual_reporting'], 'black')
+
+            col3.write(f"**Publisher Factuality**: :{factuality_color}[{metadata['factual_reporting']}]")
+
+            # Tone color coding
+            tone_color = 'red' if metadata['Avg_Tone'] < 0 else 'green'
+            col3.write(f"**Document Tone**: :{tone_color}[{metadata['Avg_Tone']}]")
+
+            st.write(f"**Document Link**: {metadata['DocumentIdentifier']}")
+            st.write(f"**Content**: {result['content'][:280]} ... ")
+
+            with st.expander("Expand to read more:"):
+                st.write(result['content'])
+
             st.divider()
-            
-            #st.write("="*90)
-            
- 
-            
+
+# **Dashboard Tab**
 with tab1:
     st.header("Worldview of Media Metrics")
 
-    min_tonality, max_tonality = df['Avg_Tone'].min(), df['Avg_Tone'].max()
     tonality_range = st.slider(
         "Filter Tonality",
         min_value=float(df['Avg_Tone'].min()),
@@ -182,36 +150,27 @@ with tab1:
         step=0.1
     )
 
-    factual_reporting_slider = st.slider(
-        "Filter Factual Reporting", 
+    factual_slider = st.slider(
+        "Filter Factual Reporting",
         min_value=0, max_value=2, value=(0, 2), step=1
     )
+
+    factual_categories = [val for val in range(factual_slider[0], factual_slider[1] + 1)]
     
-    factual_mapping = {0: 'low', 1: 'mixed', 2: 'high'}
-    factual_reporting_category = [factual_mapping[val] for val in range(factual_reporting_slider[0], factual_reporting_slider[1] + 1)]
-
-    st.write("Factual Reporting Categories: 0 = low , 1 = mixed, 2 = high")
-
     filtered_df = df[
-        (df['Avg_Tone'] >= tonality_range[0]) & 
-        (df['Avg_Tone'] <= tonality_range[1])
+        (df['Avg_Tone'].between(*tonality_range)) & 
+        (df['factual_numeric'].isin(factual_categories))
     ]
 
-    # aggregate data by country for the selected feature
+    # Aggregate data by country
     aggregated_df = filtered_df.groupby('country').agg(
         avg_bias=('bias_encoded', 'mean'),
         avg_tonality=('Avg_Tone', 'mean'),
-        avg_factual_reporting=('factual_numeric', 'mean'), 
+        avg_factual_reporting=('factual_numeric', 'mean'),
         count=('bias_encoded', 'count')
     ).reset_index()
 
-    # filter aggregated data based on factual reporting average
-    aggregated_df = aggregated_df[
-        (aggregated_df['avg_factual_reporting'] >= factual_reporting_slider[0]) &
-        (aggregated_df['avg_factual_reporting'] <= factual_reporting_slider[1])
-    ]
-
-    # create map
+    # Map visualization
     fig = px.choropleth(
         aggregated_df,
         locations="country",
@@ -219,7 +178,7 @@ with tab1:
         color="avg_bias",
         hover_name="country",
         color_continuous_scale="Plasma",
-        title="Map",
+        title="Media Bias Map",
         labels={"color": "Bias"}
     )
 
@@ -234,17 +193,17 @@ with tab1:
             countrycolor='#FFFFFF'),
         title=dict(
             text=f"<b>Bias Map</b>",
-            x=0.5, 
+            x=0.5,
             xanchor="center",
             font=dict(size=20)),
         coloraxis_colorbar=dict(
             title="Bias",
-            tickvals=[-1, -0.5, 0, 0.5, 1], 
+            tickvals=[-1, -0.5, 0, 0.5, 1],
             ticktext=["Left", "Left Center", "Neutral", "Right Center", "Right"]),
         paper_bgcolor="#374151",
         font_color="#f9fafb",
-        margin={'r':0,'t':0,'l':0,'b':0},
-        geo_bgcolor= "#374151"
+        margin={'r': 0, 't': 0, 'l': 0, 'b': 0},
+        geo_bgcolor="#374151"
     )
 
-    st.plotly_chart(fig, use_container_width=True, height=800)  
+    st.plotly_chart(fig, use_container_width=True)
