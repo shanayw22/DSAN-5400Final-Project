@@ -7,3 +7,4 @@ gdown
 torch
 setuptools
 watchdog
+psutil
