@@ -91,7 +91,7 @@ with st.sidebar:
     st.write("Shanay Wadhwani")
     st.write("Ofure Udabor")
 
-tab1, tab2, tab3 = st.tabs(["Dashboard", "Colbert", "Instructions"])
+tab1, tab2 = st.tabs(["Dashboard", "Colbert"])
 
 # **Colbert Search Tab**
 with tab2:
@@ -207,6 +207,7 @@ with tab1:
     )
 
     st.plotly_chart(fig, use_container_width=True)
+<<<<<<< HEAD
 
 with tab3:
     st.header("How to Use This App")
@@ -261,3 +262,5 @@ In this project, our goal is to build an information retrieval system that analy
 
 By combining deep learning with efficient retrieval mechanisms, ColBERT offers an effective and scalable solution for analyzing complex, context-dependent queries about media bias and tone, ultimately helping users gain deeper insights into global news coverage.
 """)
+=======
+>>>>>>> parent of b43f2c7 (Update final.py)
