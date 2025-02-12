@@ -30,7 +30,7 @@ st.set_page_config(
 def get_ragatouille_index():
     """Ensure the Google Drive ZIP file is downloaded and extracted, then return the RAG model."""
     if not os.path.exists(ZIP_FILE_PATH):
-        st.info("Downloading RAG model files from Google Drive...")
+        #st.info("Downloading RAG model files from Google Drive...")
         gdown.download(GDRIVE_URL, ZIP_FILE_PATH, quiet=False)
 
     if not os.path.exists(EXTRACT_TO_PATH):
