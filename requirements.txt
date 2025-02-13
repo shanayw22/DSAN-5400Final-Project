@@ -1,5 +1,5 @@
 streamlit
-ragatouille
+ragatouille==0.0.8post4
 pandas
 plotly
 requests
