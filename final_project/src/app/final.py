@@ -1,5 +1,6 @@
 import warnings
 warnings.filterwarnings('ignore')
+import torch
 if hasattr(torch, "_classes"):
     torch._classes.__path__ = []
 import streamlit as st
