@@ -12,7 +12,7 @@ import gdown
 import zipfile
 import shutil
 import watchdog
-
+os.environ["STREAMLIT_LOG_LEVEL"] = "error"
 # Google Drive file settings
 GDRIVE_URL = 'https://drive.google.com/uc?id=1FGVx4jFMLf6ijxwkgqFyLeCU3yPWGvAe'
 ZIP_FILE_PATH = 'final_project/src/ragatouille.zip'
