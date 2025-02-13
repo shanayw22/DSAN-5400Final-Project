@@ -1,6 +1,7 @@
 import warnings
 warnings.filterwarnings('ignore')
-
+if hasattr(torch, "_classes"):
+    torch._classes.__path__ = []
 import streamlit as st
 from ragatouille import RAGPretrainedModel
 import pandas as pd
