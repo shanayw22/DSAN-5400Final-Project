@@ -8,3 +8,5 @@ torch
 setuptools
 watchdog
 psutil
+torchvision
+torchaudio
