@@ -93,7 +93,7 @@ with st.sidebar:
     st.write("Shanay Wadhwani")
     st.write("Ofure Udabor")
 
-tab1, tab2 = st.tabs(["Dashboard", "Colbert"])
+tab1, tab2, tab3 = st.tabs(["Dashboard", "Colbert", "Instructions"])
 
 # **Colbert Search Tab**
 with tab2:
@@ -209,3 +209,38 @@ with tab1:
     )
 
     st.plotly_chart(fig, use_container_width=True)
+
+with tab3:
+    st.header("How to Use This App")
+    st.write("""
+        This application aims to explore biases and factuality in global media coverage, particularly focusing on 
+        the Palestinian-Israeli and Russian-Ukrainian conflicts.
+        ### Features:
+        1. **Colbert Search Tab**: 
+            - Enter a query to search for relevant articles.
+            - The top 10 results are displayed along with information such as source, country, publisher bias, factuality, and tone.
+            - Links to the full articles are also provided for more in-depth exploration.
+        2. **Dashboard Tab**: 
+            - Filter articles by tone and factual reporting to analyze global media coverage.
+            - View a world map of media bias across different countries with a color-coded scale.
+            - Gain insights into the average bias, factuality, and tone for each country.
+        ### How to Use:
+        1. **Colbert Search Tab**: Enter a query into the text box to retrieve articles that match your search. 
+        2. **Dashboard Tab**: Use the sliders to filter articles by tonality and factuality.
+        3. Analyze the data visualizations and use the interactive map to explore how media coverage varies by country and bias.
+        Enjoy exploring media metrics!
+        ### About ColBERT
+        ColBERT (Contextualized Late Interaction over BERT) is a state-of-the-art information retrieval model that combines the power of BERT, a transformer-based language model, with efficient retrieval techniques. Unlike traditional retrieval methods that rely solely on keyword matching or shallow semantic understanding, ColBERT utilizes BERT’s deep contextualized embeddings to capture the nuanced meaning of words and phrases in context. This enables the model to better understand the intent behind user queries and retrieve documents that are more semantically relevant, even if they don’t contain exact keyword matches.
+        How ColBERT Works:
+	        
+            1.	Contextualized Embeddings: At the core of ColBERT is BERT, a model pre-trained on vast amounts of text data, which allows it to generate rich, context-aware embeddings for each word in a query or document. These embeddings capture the meaning of words based on their surrounding context, helping the model understand synonyms, word relationships, and complex language structures.
+	        2.	Late Interaction: ColBERT employs a “late interaction” approach, where the embeddings of both the query and the documents are generated separately. These embeddings are then compared at a later stage using efficient similarity measures (like MaxSim), significantly speeding up the retrieval process while preserving the semantic richness of the embeddings.
+	        3.	Efficient Search: ColBERT’s approach enables it to scale well for large datasets. By storing document embeddings and utilizing approximate nearest neighbor (ANN) search algorithms, ColBERT can quickly find the most relevant documents for a given query, making it suitable for real-time applications like ours.
+        Why ColBERT is Effective for This Project:
+        In this project, our goal is to build an information retrieval system that analyzes biases in media coverage of global conflicts. ColBERT’s ability to understand the nuanced tone, regional focus, and thematic content of news articles makes it ideal for retrieving relevant documents based on complex user queries.
+	        
+            1.	Handling Complex Queries: Users may submit queries that are not simply keyword-based but involve more abstract concepts, such as “media bias in the Russian-Ukrainian conflict” or “tonality of Palestinian-Israeli coverage.” ColBERT’s deep contextual understanding of queries ensures that it can retrieve documents that are semantically aligned with the user’s intent, even if the exact terms aren’t explicitly mentioned in the text.
+	        2.	Semantic Relevance: By leveraging BERT’s rich embeddings, ColBERT can find documents that are contextually similar to the query, even when they use different wording or phrasing. This improves the quality of the search results, as the model can identify articles that discuss the same issues from different angles or with varying word choices.
+	        3.	Scalability and Efficiency: With the use of approximate nearest neighbor search, ColBERT can scale to handle large volumes of news articles while maintaining fast retrieval times, which is critical for our interactive visualization dashboard where users need immediate feedback on their queries.
+        By combining deep learning with efficient retrieval mechanisms, ColBERT offers an effective and scalable solution for analyzing complex, context-dependent queries about media bias and tone, ultimately helping users gain deeper insights into global news coverage.
+    """)
