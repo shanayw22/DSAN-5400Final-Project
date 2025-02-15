@@ -86,14 +86,14 @@ if 'index' not in st.session_state:
 index = st.session_state.index
 
 with st.sidebar:
-    st.write("**DSAN 5400 Project**")
+    st.write("**Unveiling Media Bias: Analyzing Global News Coverage with ColBERT-Powered Information Retrieval**")
     st.write("**Group members:**")
     st.write("Manav Arora")
     st.write("Jessica Joy")
     st.write("Shanay Wadhwani")
     st.write("Ofure Udabor")
 
-tab1, tab2, tab3 = st.tabs(["Dashboard", "Colbert", "Instructions"])
+tab1, tab2, tab3 = st.tabs(["Dashboard", "ColBERT", "Instructions"])
 
 # **Colbert Search Tab**
 with tab2:
